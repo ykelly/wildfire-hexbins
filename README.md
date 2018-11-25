@@ -6,3 +6,5 @@ https://github.com/d3/d3-geo/blob/master/README.md#geoAlbersUsa <br>
 http://blockbuilder.org/mbostock/4330486 <br>
 https://bl.ocks.org/lelandlee/7ceeba3314b3013f47e2
 
+Data from https://www.kaggle.com/rtatman/188-million-us-wildfires/home.
+
