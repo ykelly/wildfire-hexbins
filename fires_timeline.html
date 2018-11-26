@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1 shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+    <title>US Wildfires 1992-2015</title>
+    <style>
+        body {
+            margin: auto;
+        }
+        
+        .slide_container {
+            width: 40%;
+        }
+
+        .slider {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 25px;
+            background: #d3d3d3;
+            outline: none;
+            opacity: 0.7;
+            -webkit-transition: .2s;
+            transition: opacity .2s;
+        }
+
+        .slider:hover {
+            opacity: 1;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 25px;
+            height: 25px;
+            background: #4CAF50;
+            cursor: pointer;
+        }
+
+        .slider::-moz-range-thumb {
+            width: 25px;
+            height: 25px;
+            background: #4CAF50;
+            cursor: pointer;
+        }
+
+        div.slide_container::before {
+            content: "1992"
+        }
+
+        div.slide_container::after {
+            content: "2015"
+        }
+
+        img {
+            width: 50%;
+        }
+
+
+    </style>
+</head>
+<body>
+    <h1>Density of US Wildfires from 1992-2015</h1>
+    <p>Drag the slider to display different years.</p>
+    <br><br>
+    <span id = "map_img"></span>
+    <div class = "slide_container">
+        <input type="range" min="1992" max="2015" value="1992" step="1" class="slider" id="time_slider">
+    </div>
+    <script>
+        var slider = document.getElementById("time_slider");
+        var output = document.getElementById("map_img");
+        output.innerHTML = "<img src = 'images/fires92.png'/>";
+
+        slider.oninput = function() {
+            if (this.value == 1992) {
+                output.innerHTML = "<img src = 'images/fires92.png'/>"
+            } else if (this.value == 1993) {
+                output.innerHTML = "<img src = 'images/fires93.png'/>"
+            } else if (this.value == 1994) {
+                output.innerHTML = "<img src = 'images/fires94.png'/>"
+            } else if (this.value == 1995) {
+                output.innerHTML = "<img src = 'images/fires95.png'/>"
+            } else if (this.value == 1996) {
+                output.innerHTML = "<img src = 'images/fires96.png'/>"
+            } else if (this.value == 1997) {
+                output.innerHTML = "<img src = 'images/fires97.png'/>"
+            } else if (this.value == 1998) {
+                output.innerHTML = "<img src = 'images/fires98.png'/>"
+            } else if (this.value == 1999) {
+                output.innerHTML = "<img src = 'images/fires99.png'/>"
+            } else if (this.value == 2000) {
+                output.innerHTML = "<img src = 'images/fires00.png'/>"
+            } else if (this.value == 2001) {
+                output.innerHTML = "<img src = 'images/fires01.png'/>"
+            } else if (this.value == 2002) {
+                output.innerHTML = "<img src = 'images/fires02.png'/>"
+            } else if (this.value == 2003) {
+                output.innerHTML = "<img src = 'images/fires03.png'/>"
+            } else if (this.value == 2004) {
+                output.innerHTML = "<img src = 'images/fires04.png'/>"
+            } else if (this.value == 2005) {
+                output.innerHTML = "<img src = 'images/fires05.png'/>"
+            } else if (this.value == 2006) {
+                output.innerHTML = "<img src = 'images/fires06.png'/>"
+            } else if (this.value == 2007) {
+                output.innerHTML = "<img src = 'images/fires07.png'/>"
+            } else if (this.value == 2008) {
+                output.innerHTML = "<img src = 'images/fires08.png'/>"
+            } else if (this.value == 2009) {
+                output.innerHTML = "<img src = 'images/fires09.png'/>"
+            } else if (this.value == 2010) {
+                output.innerHTML = "<img src = 'images/fires10.png'/>"
+            } else if (this.value == 2011) {
+                output.innerHTML = "<img src = 'images/fires11.png'/>"
+            } else if (this.value == 2012) {
+                output.innerHTML = "<img src = 'images/fires12.png'/>"
+            } else if (this.value == 2013) {
+                output.innerHTML = "<img src = 'images/fires13.png'/>"
+            } else if (this.value == 2014) {
+                output.innerHTML = "<img src = 'images/fires14.png'/>"
+            } else if (this.value == 2015) {
+                output.innerHTML = "<img src = 'images/fires15.png'/>"
+            }
+        }
+    </script>
+</body>
+</html>
