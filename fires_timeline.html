@@ -84,17 +84,25 @@
             width: 100%;
         }
 
+        #fire_class_descr {
+            margin-top: 80px;
+            margin-left: 40px;
+            font-size: 12px;
+            font
+        }
+
+
 
     </style>
 </head>
 <body>
-    <div class = "container">
+    <div class = "container" style = "margin-top: 10px;">
         <h1>US Wildfire Explorer 1992-2015</h1>
         <br>
         <div class = "row">
             <div class = "map-column">
                 <div class = "header">
-                    <p>Drag the slider to display the map for different years.</p><br>
+                    <p style = "margin-left: 20px;">Drag the slider to display the map and charts for different years.</p><br>
                 </div>
                 <div class = "legend" style="display: inline-block"><img src="images/map_legend.png" style="width: 60%;"/></div>
                 <div class = "map" style="display: inline-block;" id = "map_img"></div>
@@ -102,9 +110,12 @@
                     <input type="range" min="1992" max="2015" value="1992" step="1" class="slider" id="time_slider">
                 </div>
             </div>
-            <div class = "content-column">
-                <h3>Year: <span id="year"></span></h3>
-                <div id = "fire_class_div" style = "width: 450px; height: 250px; margin-left: 75px;"></div>
+            <div class = "content-column" style = "margin-top: -60px;">
+                <h2 style = "margin-left: 200px; margin-top: 20px;">Year: <span id="year"></span></h2>
+                <div id = "fire_class_descr"><p style = "font-weight: bold;">Size Class Acreage</p>
+                    <p style = "margin-top: -10px;">A: 0.01-0.25 acres <br> B: 0.26-9.9 acres <br> C: 10.0-99.9 acres
+                        <br> D: 100-299 acres <br> E: 300-999 acres <br> F: 1000-4999 acres <br> G: 5000+ acres</p></div>
+                <div id = "fire_class_div" style = "width: 450px; height: 300px; margin-left: 180px; margin-top: -235px;"></div>
             </div>
         </div>
     </div>
@@ -115,15 +126,23 @@
         output.innerHTML = "<img src = 'images/fires92.png'/>";
         yr_output.innerHTML = slider.value;
 
-        google.charts.load('current', {packages: ['corechart', 'controls']});
+        google.charts.load('current');
         function drawFireClassChart(year = slider.value) {
+
           var wrapper = new google.visualization.ChartWrapper({
             chartType: 'ColumnChart',
             dataSourceUrl: 'https://docs.google.com/spreadsheets/d/1D_JZN9YRYWiPvxErx9AtLSTtncZ3KAcBisXDtyzPr6E/edit#gid=1683808434?key=AIzaSyClHGdla6T6tXWJh1FkknuisCNhpDT1SQA',
             query: 'SELECT B,C WHERE A = "'+String(year)+'"',
-            options: {'title': 'Distribution of Fire Classes'},
+            options: {'colors': ['#fab85d'],
+                    'hAxis' : { 'title' : 'Fire Class' },
+                    'title': 'Distribution of Fire Sizes, Classed A-G',
+                    'titleTextStyle': {'fontSize': '14'},
+                    'legend' : {position: 'none' },
+                    'vAxis' : {format: 'decimal',
+                               title: 'Number of Fires',}},
             containerId: 'fire_class_div'
           });
+
           wrapper.draw();
         }
 
