@@ -31,6 +31,8 @@ G: 5000+ acres
 
 The data for these charts are hosted in two Google Sheets documents, but I've uploaded the .csv files here in the data folder for reference (fire_classes.csv and fire_causes.csv).
 
+It should also be noted that this application has only been tested in Google Chrome.
+
 ## Sources
 https://github.com/d3/d3-hexbin <br>
 https://github.com/d3/d3-geo/blob/master/README.md#geoAlbersUsa <br>
