@@ -29,7 +29,7 @@ G: 5000+ acres
 12: Structure <br>
 13: NA
 
-The data for these charts are hosted in two Google Sheets documents, but I've uploaded the .csv files here as well for reference (fire_classes.csv and fire_causes.csv).
+The data for these charts are hosted in two Google Sheets documents, but I've uploaded the .csv files here in the data folder for reference (fire_classes.csv and fire_causes.csv).
 
 ## Sources
 https://github.com/d3/d3-hexbin <br>
