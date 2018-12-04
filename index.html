@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1 shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+    <title>US Wildfire Explorer 1992-2015</title>
+    <style>
+
+        .container {
+            margin-left: 60px;
+        }
+
+        .map-column {
+            width: 66%;
+            padding: 0 5px 0 0;
+            float: left;
+        }
+
+        .content-column {
+            width: 33%;
+            padding: 0 20px 0 0;
+            float: right;
+        }
+
+        .legend {
+            margin-left: 68%;
+            position: relative;
+            z-index: 1000;
+        }
+
+        .map {
+            margin-top: -80px;
+        }
+
+        .slide_container {
+            width: 60%;
+            position: relative;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .slider {
+            -webkit-appearance: none;
+            width: 80%;
+            height: 6px;
+            border-radius: 5px;
+            margin-top: 40px;
+            margin-left: 40px;
+            background: #6d6d6d;
+            outline: none;
+            opacity: 0.7;
+            -webkit-transition: .2s;
+            transition: opacity .2s;
+        }
+
+        .slider:hover {
+            opacity: 1;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 25px;
+            height: 25px;
+            margin-bottom: 8px;
+            background: url("images/fire_icon.svg");
+            cursor: pointer;
+        }
+
+        .slider::-moz-range-thumb {
+            width: 25px;
+            height: 25px;
+            margin-bottom: 8px;
+            background: url("images/fire_icon.svg");
+            cursor: pointer;
+        }
+
+        img {
+            width: 100%;
+        }
+
+        #fire_class_descr {
+            margin-top: 80px;
+            margin-left: 40px;
+            font-size: 12px;
+        }
+
+        #fire_cause_descr {
+            margin-top: 20px;
+            margin-left: 40px;
+            font-size: 12px;
+        }
+
+
+
+    </style>
+</head>
+<body>
+    <div class = "container" style = "margin-top: 10px;">
+        <h1 style = "margin-left: -20px;">US Wildfire Explorer 1992-2015</h1>
+        <br>
+        <div class = "row">
+            <div class = "map-column" style = "margin-left: -20px;">
+                <div class = "header">
+                    <p style = "margin-left: 20px;">Drag the slider to display the map and charts for different years.</p><br>
+                </div>
+                <div class = "legend" style="display: inline-block"><img src="images/map_legend.png" style="width: 60%;"/></div>
+                <div class = "map" style="display: inline-block;" id = "map_img"></div>
+                <div class = "slide_container">
+                    <input type="range" min="1992" max="2015" value="1992" step="1" class="slider" id="time_slider">
+                </div>
+            </div>
+            <div class = "content-column" style = "margin-top: -60px; margin-left: 20px;">
+                <h2 style = "margin-left: 200px; margin-top: 20px;">Year: <span id="year"></span></h2>
+                <div id = "fire_classes">
+                    <div id = "fire_class_descr"><p style = "font-weight: bold;">Size Class Acreage</p>
+                        <p style = "margin-top: -10px;">A: 0.01-0.25 acres <br> B: 0.26-9.9 acres <br> C: 10.0-99.9 acres
+                            <br> D: 100-299 acres <br> E: 300-999 acres <br> F: 1000-4999 acres <br> G: 5000+ acres</p></div>
+                    <div id = "fire_class_div" style = "width: 450px; height: 300px; margin-left: 180px; margin-top: -235px;"></div>
+                </div>
+                <div id = "fire_causes">
+                    <div id = "fire_cause_descr"><p style = "font-weight: bold;">Cause Code<br>Description</p>
+                        <p style = "margin-top: -10px">1: Lightning<br>2: Equipment Use<br>3: Smoking<br>4: Campfire<br>5: Debris Burning<br>
+                            6: Railroad<br>7: Arson<br>8: Children<br>9: Miscellaneous<br>10: Fireworks<br>
+                            11: Powerline<br>12: Structure<br> 13: NA</p></div>
+                    <div id = "fire_cause_div" style = "width: 500px; height: 300px; margin-left: 155px; margin-top: -295px;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type = "text/javascript">
+        var slider = document.getElementById("time_slider");
+        var output = document.getElementById("map_img");
+        var yr_output = document.getElementById("year");
+        output.innerHTML = "<img src = 'images/fires92.png'/>";
+        yr_output.innerHTML = slider.value;
+
+        google.charts.load('current');
+        function drawFireClassChart(year = slider.value) {
+
+          var wrapper_class = new google.visualization.ChartWrapper({
+            chartType: 'ColumnChart',
+            dataSourceUrl: 'https://docs.google.com/spreadsheets/d/1D_JZN9YRYWiPvxErx9AtLSTtncZ3KAcBisXDtyzPr6E/edit#gid=1683808434?key=AIzaSyClHGdla6T6tXWJh1FkknuisCNhpDT1SQA',
+            query: 'SELECT B,C WHERE A = "'+String(year)+'"',
+            options: {'colors': ['#fab85d'],
+                    'hAxis' : { 'title' : 'Class' },
+                    'title': 'Distribution of Fire Sizes, Classed A-G',
+                    'titleTextStyle': {'fontSize': '14'},
+                    'legend' : {position: 'none' },
+                    'vAxis' : {format: 'decimal',
+                               title: 'Number of Fires',}},
+            containerId: 'fire_class_div'
+          });
+
+          wrapper_class.draw();
+        }
+
+        function drawFireCauseChart(year = slider.value) {
+
+          var wrapper_cause = new google.visualization.ChartWrapper({
+            chartType: 'ColumnChart',
+            dataSourceUrl: 'https://docs.google.com/spreadsheets/d/1cIpCDfjYe3BexXW6mhbpjpuxgMaA4h5SGnnfR9Zmba4/edit#gid=150797007?key=AIzaSyBChOFLmTU6VFk8F12nThp9582wr9F4IeM',
+            query: 'SELECT B,C WHERE A = "'+String(year)+'"',
+            options: {'colors': ['#b6373e'],
+                    'hAxis' : { 'title' : 'Cause Code' },
+                    'title': 'Distribution of Fire Causes, Coded 1-13',
+                    'titleTextStyle': {'fontSize': '14'},
+                    'legend' : {position: 'none' },
+                    'vAxis' : {format: 'decimal',
+                               title: 'Number of Fires',}},
+            containerId: 'fire_cause_div'
+          });
+
+          wrapper_cause.draw();
+        }
+
+        google.charts.setOnLoadCallback(drawFireClassChart);
+        google.charts.setOnLoadCallback(drawFireCauseChart);
+
+        slider.oninput = function() {
+            yr_output.innerHTML = this.value;
+            if (this.value == 1992) {
+                output.innerHTML = "<img src = 'images/fires92.png'/>"
+            } else if (this.value == 1993) {
+                output.innerHTML = "<img src = 'images/fires93.png'/>"
+            } else if (this.value == 1994) {
+                output.innerHTML = "<img src = 'images/fires94.png'/>"
+            } else if (this.value == 1995) {
+                output.innerHTML = "<img src = 'images/fires95.png'/>"
+            } else if (this.value == 1996) {
+                output.innerHTML = "<img src = 'images/fires96.png'/>"
+            } else if (this.value == 1997) {
+                output.innerHTML = "<img src = 'images/fires97.png'/>"
+            } else if (this.value == 1998) {
+                output.innerHTML = "<img src = 'images/fires98.png'/>"
+            } else if (this.value == 1999) {
+                output.innerHTML = "<img src = 'images/fires99.png'/>"
+            } else if (this.value == 2000) {
+                output.innerHTML = "<img src = 'images/fires00.png'/>"
+            } else if (this.value == 2001) {
+                output.innerHTML = "<img src = 'images/fires01.png'/>"
+            } else if (this.value == 2002) {
+                output.innerHTML = "<img src = 'images/fires02.png'/>"
+            } else if (this.value == 2003) {
+                output.innerHTML = "<img src = 'images/fires03.png'/>"
+            } else if (this.value == 2004) {
+                output.innerHTML = "<img src = 'images/fires04.png'/>"
+            } else if (this.value == 2005) {
+                output.innerHTML = "<img src = 'images/fires05.png'/>"
+            } else if (this.value == 2006) {
+                output.innerHTML = "<img src = 'images/fires06.png'/>"
+            } else if (this.value == 2007) {
+                output.innerHTML = "<img src = 'images/fires07.png'/>"
+            } else if (this.value == 2008) {
+                output.innerHTML = "<img src = 'images/fires08.png'/>"
+            } else if (this.value == 2009) {
+                output.innerHTML = "<img src = 'images/fires09.png'/>"
+            } else if (this.value == 2010) {
+                output.innerHTML = "<img src = 'images/fires10.png'/>"
+            } else if (this.value == 2011) {
+                output.innerHTML = "<img src = 'images/fires11.png'/>"
+            } else if (this.value == 2012) {
+                output.innerHTML = "<img src = 'images/fires12.png'/>"
+            } else if (this.value == 2013) {
+                output.innerHTML = "<img src = 'images/fires13.png'/>"
+            } else if (this.value == 2014) {
+                output.innerHTML = "<img src = 'images/fires14.png'/>"
+            } else if (this.value == 2015) {
+                output.innerHTML = "<img src = 'images/fires15.png'/>"
+            }
+
+            // Google charts
+            google.charts.setOnLoadCallback(drawFireClassChart);
+            google.charts.setOnLoadCallback(drawFireCauseChart);
+
+        }
+
+
+    </script>
+</body>
+</html>
