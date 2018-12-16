@@ -39,6 +39,7 @@ https://github.com/d3/d3-geo/blob/master/README.md#geoAlbersUsa <br>
 http://blockbuilder.org/mbostock/4330486 <br>
 https://bl.ocks.org/lelandlee/7ceeba3314b3013f47e2 <br>
 https://developers.google.com/chart/interactive/docs/gallery/columnchart
+https://www.w3schools.com/howto/howto_js_rangeslider.asp
 
 Data from https://www.kaggle.com/rtatman/188-million-us-wildfires/home.
 
